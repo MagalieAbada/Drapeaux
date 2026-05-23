@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau de la Malaisie par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />
+
+
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        function dessiner() {
+            const objCanvas = document.getElementById('monCanvas');
+            const objC2D = objCanvas.getContext('2d');
+
+            /*
+            Dessiner le drapeau de la Malaisie 
+            */
+
+            // Bandes blanches et rouges
+            objC2D.lineWidth = 30;
+            for (let i = 0; i < 420; i += 30) {
+                if ((i / 30) % 2 == 1) {
+                    objC2D.strokeStyle = "#FFFFFF";
+                } else if ((i / 30) % 2 == 0) {
+                    objC2D.strokeStyle = "#FF0000";
+                }
+                objC2D.beginPath();
+                objC2D.moveTo(0, i + 15);
+                objC2D.lineTo(640, i + 15);
+                objC2D.stroke();
+            }
+
+            // Remplir le carré en bleu
+            let moitCanva = objCanvas.width / 2;
+            objC2D.fillStyle = "#0000FF";
+            objC2D.fillRect(0, 0, moitCanva, 240);
+
+            /*
+            .arc(intXCentre, intYCentre, intRayon, fltAngle1, fltAngle2, binSensAntiHoraire)
+                - (intXCentre, intYCentre) est le point du centre du cercle;
+                - intRayon est le rayon du cercle;
+                - (fltAngle1, fltAngle2) sont les 2 angles en radians qui déterminent le début et la fin de 
+                l’arc par rapport au cercle;
+                - binSensAntiHoraire doit être true si l’arc doit se dessiner dans le sens antihoraire
+            */
+
+            // Cercle jaune pour faire le croissant
+            objC2D.fillStyle = "#FFFF00";
+            objC2D.beginPath();
+            objC2D.arc((moitCanva / 4) + 30, (moitCanva / 4) + 30, moitCanva / 4, 0, 2 * Math.PI);
+            objC2D.fill();
+            objC2D.closePath();
+
+
+            // Cercle bleu pour faire le croissant
+            objC2D.fillStyle = "#0000FF";
+            objC2D.beginPath();
+            objC2D.arc((moitCanva / 4) + 50, (moitCanva / 4) + 30, (moitCanva / 4) - 10, 0, 2 * Math.PI);
+            objC2D.fill();
+            objC2D.closePath();
+            
+
+            // Centre du soleil
+            objC2D.fillStyle = "#FFFF00";
+            let centreSoleilX = (moitCanva / 4) + 110;
+            let centreSoleilY = (moitCanva / 4) + 30;
+
+
+            objC2D.save();
+            
+            // Triangles pour les rayons du soleil
+            objC2D.translate(centreSoleilX, centreSoleilY); // (0, 0) est au centre du cercle
+
+            let arreteTriangle = 70;
+            let demiBase = 10;
+            let anglePourRotation = 2 * Math.PI / 14;
+
+            for (let i = 0; i < 14; i++) {
+                objC2D.beginPath();
+                objC2D.moveTo(-demiBase, 0);
+                objC2D.lineTo(0, -arreteTriangle);
+                objC2D.lineTo(demiBase, 0);
+                objC2D.closePath();
+                objC2D.fill();
+                objC2D.rotate(anglePourRotation);
+            }
+
+            // Encadrer le drapeau d’un contour noir
+            objC2D.restore();
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, 640, 420);
+
+        }
+    </script>
+</head>
+
+<body onload="dessiner()">
+
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p>
+            <span class="sTitreApp">
+                Drapeau de la Malaisie<br />
+            </span> par
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span>
+        </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">
+        <canvas id="monCanvas" width="640" height="420">
+            Votre navigateur ne supporte pas la balise canvas
+        </canvas>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+</body>
+
+</html>

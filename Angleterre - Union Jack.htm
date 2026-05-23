@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau de l'Angleterre par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />
+
+
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        let objCanvas = null;
+        let objC2D = null;
+
+        let hauteur;
+        let largeur;
+
+        let intXSouris = 0;
+        let intYSouris = 0;
+
+        let boolDrag = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+
+        // Position du texte
+        let xTexte;
+        let yTexte;
+
+        // Style du texte
+        const strPolice = "bold 150px Impact";
+        const intHauteurTxt = 110;
+
+        //Fantôme
+        let imgGhost = new Image();
+        imgGhost.src = "Transparent.gif";
+
+        function initDessiner() {
+            objCanvas = document.getElementById('monCanvas');
+            objC2D = objCanvas.getContext('2d');
+
+            largeur = objCanvas.width
+            hauteur = objCanvas.height;
+
+            xTexte = (largeur / 2);
+            yTexte = (hauteur / 6);
+
+            dessiner();
+        }
+
+        function dessiner() {
+            effacerDessin();
+            dessinerTexte();
+            dessinerDrapeau();
+            
+        }
+
+        function effacerDessin() {
+            objC2D.clearRect(0, 0, objCanvas.width, objCanvas.height);
+
+        }
+
+        function pointDansTexte(x, y) {
+            objC2D.save();
+            objC2D.font = strPolice;
+            const w1 = objC2D.measureText("UNION").width;
+            const w2 = objC2D.measureText("JACK").width;
+            objC2D.restore();
+
+            // Largeur de la boîte basée sur le mot le plus long
+            const w = Math.max(w1, w2);
+
+            // Hauteur de la boîte = 2 lignes
+            const h = intHauteurTxt * 2;
+
+            // xTexte est la position du centre des mots. En retirant la moitié de la 
+            // longueur du mot le plus long, on trouve le côté gauche de la boîte
+            const left = xTexte - w / 2;
+            const top = yTexte;         // Car objC2D.textBaseline = "top";
+            return (
+                (x >= left) &&          // Le x du point cliqué est + grand que la valeur du bord gauche
+                (x <= left + w) &&      //ET + petit que la valeur du bord gauche + longueur des mots (bord droit)
+                (y >= top) &&           // ET le y du point cliqué est + grand que la valeur du bord supérieur
+                (y <= top + h)          // ET + petit que la valeur du bord supérieur + hauteur des mots (bord inf)
+                );
+        }
+
+        function prendreTexte(evt) {
+            const objElemRect = objCanvas.getBoundingClientRect();
+            intXSouris = evt.clientX - objElemRect.left;
+            intYSouris = evt.clientY - objElemRect.top;
+
+            if (!pointDansTexte(intXSouris, intYSouris)) {
+                evt.preventDefault();
+                boolDrag = false;
+            } else {
+                boolDrag = true;
+                // Différence entre le point cliqué et le centre du texte pour un drag fluide
+                offsetX = intXSouris - xTexte;
+                offsetY = intYSouris - yTexte;
+
+
+                // Le fantôme est une image transparente 
+                const objImage = document.getElementById('imgTransparent');
+                evt.dataTransfer.setDragImage(objImage, 0, 0);
+            }
+        }
+
+        function glisserTexte(evt) {
+            evt.preventDefault();
+            if (boolDrag) {
+                const objElemRect = objCanvas.getBoundingClientRect();
+                const x = evt.clientX - objElemRect.left
+                const y = evt.clientY - objElemRect.top;
+
+                xTexte = x - offsetX;
+                yTexte = y - offsetY;
+
+                dessiner();
+            }
+
+        }
+
+        function deposerTexte(evt) {
+            if (evt) evt.preventDefault();
+            boolDrag = false;
+            dessiner();
+        }
+
+        function dessinerTexte() {
+            objC2D.save();
+            
+            objC2D.font = strPolice;
+            objC2D.fillStyle = "#000000";
+            objC2D.textBaseline = "top";
+            objC2D.textAlign = "center";
+            objC2D.fillText("UNION", xTexte, yTexte -25);
+            objC2D.fillText("JACK", xTexte, yTexte + 5 + intHauteurTxt);
+
+            objC2D.restore();
+        }
+
+        function dessinerDrapeau() {
+            objC2D.save();
+            
+            objC2D.globalCompositeOperation = 'source-atop';
+
+            // Remplir le canvas en bleu foncé
+            objC2D.fillStyle = "#00008B";
+            objC2D.fillRect(0, 0, largeur, hauteur);
+
+            // Dessiner la croix blanche
+            objC2D.strokeStyle = "#FFFFFF";
+            objC2D.lineWidth = 60;
+            objC2D.beginPath();
+            objC2D.moveTo(0, 0);
+            objC2D.lineTo(largeur, hauteur);
+            objC2D.stroke();
+
+            objC2D.beginPath(); 
+            objC2D.moveTo(largeur, 0);
+            objC2D.lineTo(0, hauteur);
+            objC2D.stroke();
+
+            // Dessiner la croix rouge
+            objC2D.strokeStyle = "#FF0000";
+            objC2D.lineWidth = 20;
+
+            objC2D.beginPath();
+            objC2D.moveTo(-10, 5);
+            objC2D.lineTo(hauteur - 10, (hauteur / 2) +5);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(largeur, -10);
+            objC2D.lineTo(hauteur, (hauteur / 2) - 10);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(0, hauteur + 10);
+            objC2D.lineTo(hauteur, (hauteur / 2) + 10);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(largeur + 10, hauteur);
+            objC2D.lineTo(hauteur + 10, hauteur / 2);
+            objC2D.stroke();
+
+            // Dessiner le plus blanc
+            objC2D.strokeStyle = "#FFFFFF";
+            objC2D.lineWidth = 100;
+
+            objC2D.beginPath();
+            objC2D.moveTo(hauteur, 0);
+            objC2D.lineTo(hauteur, hauteur);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(0, hauteur / 2);
+            objC2D.lineTo(largeur, hauteur / 2);
+            objC2D.stroke();
+
+            // Dessiner le plus rouge
+            objC2D.strokeStyle = "#FF0000";
+            objC2D.lineWidth = 60;
+
+            objC2D.beginPath();
+            objC2D.moveTo(hauteur, 0);
+            objC2D.lineTo(hauteur, hauteur);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(0, hauteur / 2);
+            objC2D.lineTo(largeur, hauteur / 2);
+            objC2D.stroke();
+
+            // Encadrer le drapeau d’un contour noir
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, largeur, hauteur);
+
+            objC2D.restore();
+        }
+    </script>
+</head>
+
+<body onload="initDessiner()">
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p>
+            <span class="sTitreApp">
+                Drapeau de l'Angleterre<br />
+            </span> par
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span>
+        </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">
+        <canvas id="monCanvas" width="640" height="320" tabIndex="1" draggable="true" ondragstart="prendreTexte(event)"
+            ondragover="glisserTexte(event)" ondrop="deposerTexte(event)">
+            Votre navigateur ne supporte pas la balise canvas
+        </canvas>
+        <img id="imgTransparent" src="Transparent.gif" alt="Transparent" style="display:none;"/>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+</body>
+
+</html>

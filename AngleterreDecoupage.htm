@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau de l'Angleterre - Découpage par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />   
+ 
+ 
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        function dessiner() {
+            const objCanvas = document.getElementById('monCanvas');
+            const objC2D = objCanvas.getContext('2d');       
+            
+		    // Dessin de l'ellipse et découpe
+            let centreX = objCanvas.width/2;
+            let centreY = objCanvas.height/2;
+
+            objC2D.beginPath();
+            objC2D.ellipse(centreX, centreY, centreX, centreY, 0, 0, 2 * Math.PI);
+            objC2D.clip();
+
+            // Remplir le canvas en bleu foncé
+            objC2D.fillStyle = "#00008B";
+            objC2D.fillRect(0,0,640,320);
+
+            // Dessiner la croix blanche
+            objC2D.strokeStyle = "#FFFFFF";
+            objC2D.lineWidth = 60;  
+            objC2D.beginPath();
+            objC2D.moveTo(0, 0);
+            objC2D.lineTo(640, 320);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(640, 0);
+            objC2D.lineTo(0, 320);
+            objC2D.stroke();
+
+            // Dessiner la croix rouge
+            objC2D.strokeStyle = "#FF0000";
+            objC2D.lineWidth = 20;
+
+            objC2D.beginPath();
+            objC2D.moveTo(-10, 5);
+            objC2D.lineTo(310, 165);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(640, -10);
+            objC2D.lineTo(320, 150);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(0, 330);
+            objC2D.lineTo(320, 170);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(650, 320);
+            objC2D.lineTo(330, 160);
+            objC2D.stroke();
+
+            // Dessiner le plus blanc
+            objC2D.strokeStyle = "#FFFFFF";
+            objC2D.lineWidth = 100;
+
+            objC2D.beginPath();
+            objC2D.moveTo(320, 0);
+            objC2D.lineTo(320, 320);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(0, 160);
+            objC2D.lineTo(640, 160);
+            objC2D.stroke();
+
+            // Dessiner le plus rouge
+            objC2D.strokeStyle = "#FF0000";
+            objC2D.lineWidth = 60;
+
+            objC2D.beginPath();
+            objC2D.moveTo(320, 0);
+            objC2D.lineTo(320, 320);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(0, 160);
+            objC2D.lineTo(640, 160);
+            objC2D.stroke();
+
+            // Encadrer le drapeau d’un contour noir
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, 640, 320);
+	    }
+    </script>
+</head>
+
+<body onload="dessiner()">
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p> 
+            <span class="sTitreApp">
+                Drapeau de l'Angleterre<br />
+            </span> par 
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span> 
+       </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">	
+	   <canvas id="monCanvas" width="640" height="320">
+		    Votre navigateur ne supporte pas la balise canvas
+	    </canvas>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+
+
+</body>
+</html>
