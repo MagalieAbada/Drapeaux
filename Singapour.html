@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau de Singapour par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />   
+ 
+ 
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        function dessiner() {
+            const objCanvas = document.getElementById('monCanvas');
+            const objC2D = objCanvas.getContext('2d');       
+
+            let hauteurCanva = objCanvas.height;
+            let largeurCanva = objCanvas.width;
+            let centreX = largeurCanva  / 2;
+            let centreY = hauteurCanva / 2; 
+
+            // Partie rouge
+            objC2D.fillStyle = "#FF0000";
+            objC2D.fillRect(0, 0, largeurCanva, centreY);
+
+            // Partie blanche
+            objC2D.fillStyle = "#FFFFFF";
+            objC2D.fillRect(0, centreY, largeurCanva, centreY);
+
+            // Croissant de lune
+            objC2D.beginPath();
+            objC2D.arc(100, 100, 80, 0, Math.PI * 2);
+            objC2D.fill();
+
+            objC2D.beginPath();
+            objC2D.fillStyle = "#FF0000";
+            objC2D.arc(125, 100, 75, 0, Math.PI * 2);
+            objC2D.fill();
+
+            // Les étoiles
+            objC2D.save();
+            objC2D.fillStyle = "#FFFFFF";
+            const centreEtoilesX = 150;
+            const centreEtoilesY = 100;
+            const rayonPlacement = 35;
+            objC2D.translate(centreEtoilesX, centreEtoilesY)
+            
+            // Infos étoiles
+            let arreteTriangle = 15;
+            let demiBase = 5;
+
+            const angleEntreEtoiles = 2 * Math.PI / 5;
+
+            // 5 étoiles
+            for (let e = 0; e < 5; e++) {
+                objC2D.save();
+                const rotation = -Math.PI / 2 + e * angleEntreEtoiles
+                objC2D.rotate(rotation);
+                objC2D.translate(rayonPlacement, 0);
+                objC2D.rotate(-rotation);
+                dessinerEtoile(objC2D, arreteTriangle, demiBase, 5);
+                objC2D.restore();
+            }
+            objC2D.restore();
+
+            // Encadrer le drapeau d’un contour noir
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, 640, 420);
+    	}
+
+        function dessinerEtoile(objC2D, arreteTriangle, demiBase, nb) {
+            const angle = 2 * Math.PI / nb;
+            for (let i = 0; i < nb; i++) {
+                objC2D.beginPath();
+                objC2D.moveTo(-demiBase, 0);
+                objC2D.lineTo(0, -arreteTriangle);
+                objC2D.lineTo(demiBase, 0);
+                objC2D.closePath();
+                objC2D.fill();
+                objC2D.rotate(angle);
+            }
+        }
+    </script>
+</head>
+
+<body onload="dessiner()">
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p> 
+            <span class="sTitreApp">
+                Drapeau de Singapour<br />
+            </span> par 
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span> 
+       </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">	
+	   <canvas id="monCanvas" width="640" height="420">
+		    Votre navigateur ne supporte pas la balise canvas
+	    </canvas>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+</body>
+</html>

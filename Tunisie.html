@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau de la Tunisie par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />   
+ 
+ 
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        function dessiner() {
+            const objCanvas = document.getElementById('monCanvas');
+            const objC2D = objCanvas.getContext('2d');       
+            
+            let hauteurCanva = objCanvas.height / 2;
+            let largeurCanva = objCanvas.width / 2;
+
+            // Remplir le canvas en rouge
+            objC2D.fillStyle = "#FF0000";
+            objC2D.fillRect(0,0,640,420); 
+
+            // Dessiner le cercle blanc
+            objC2D.fillStyle = "#FFFFFF";
+            objC2D.save();
+            objC2D.translate(largeurCanva, hauteurCanva);
+
+            objC2D.beginPath();
+            objC2D.arc(0, 0, 100, 0, Math.PI * 2);
+            objC2D.fill();
+
+            // Dessiner le cercle rouge du croissant
+            objC2D.fillStyle = "#FF0000";
+            objC2D.beginPath();
+            objC2D.arc(0, 0, 75, 0, Math.PI * 2);
+            objC2D.fill();
+            objC2D.restore();
+
+            // Dessiner le cercle blanc du croissant
+            objC2D.save();
+            objC2D.translate(largeurCanva + 20, hauteurCanva);
+
+            objC2D.beginPath();
+            objC2D.arc(0, 0, 60, 0, Math.PI * 2);
+            objC2D.fill();
+
+            // Dessiner l'étoile rouge
+            objC2D.fillStyle = "#FF0000";
+            objC2D.rotate(-Math.PI / 2);
+            
+            let arreteTriangle = 45;
+            let demiBase = 13;
+            let anglePourRotation = 2 * Math.PI / 5;
+            for (let i = 0; i < 5; i++) {
+                objC2D.beginPath();
+                objC2D.moveTo(-demiBase, 0);
+                objC2D.lineTo(0, -arreteTriangle);
+                objC2D.lineTo(demiBase, 0);
+                objC2D.closePath();
+                objC2D.fill();
+                objC2D.rotate(anglePourRotation);
+            }
+
+            objC2D.restore();
+            // Encadrer le drapeau d’un contour noir
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, 640, 420);
+    	}
+    </script>
+</head>
+
+<body onload="dessiner()">
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p> 
+            <span class="sTitreApp">
+                Drapeau de la Tunisie<br />
+            </span> par 
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span> 
+       </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">	
+	   <canvas id="monCanvas" width="640" height="420">
+		    Votre navigateur ne supporte pas la balise canvas
+	    </canvas>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+</body>
+</html>

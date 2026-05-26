@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau de l'Algérie par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />   
+ 
+ 
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        function dessiner() {
+            const objCanvas = document.getElementById('monCanvas');
+            const objC2D = objCanvas.getContext('2d');       
+            
+            let hauteurCanva = objCanvas.height;
+            let largeurCanva = objCanvas.width;
+            let centreX = largeurCanva  / 2;
+            let centreY = hauteurCanva / 2; 
+
+            // Partie verte
+            objC2D.fillStyle = "#006233";
+            objC2D.fillRect(0, 0, centreX, hauteurCanva);
+
+            // Partie blanche
+            objC2D.fillStyle = "#FFFFFF";
+            objC2D.fillRect(centreX, 0, centreX, hauteurCanva);
+
+            // Croissant de lune
+            objC2D.fillStyle = "#E70013";
+            objC2D.beginPath();
+            objC2D.arc(centreX, centreY, 100, 0, Math.PI * 2);
+            objC2D.fill();
+
+            // Découpage d'un cercle pour petit pour former le croissant
+            objC2D.save();
+            objC2D.fillStyle = "#FFFFFF";
+            objC2D.beginPath();
+            objC2D.arc(centreX + 25, centreY, 80, 0, Math.PI * 2);
+            objC2D.clip();
+
+            // redessiner le fond seulement dans le clip
+            objC2D.fillStyle = "#006233";
+            objC2D.fillRect(0, 0, centreX, hauteurCanva);
+
+            objC2D.fillStyle = "#FFFFFF";
+            objC2D.fillRect(centreX, 0, centreX, hauteurCanva);
+            objC2D.restore();
+
+            // Dessiner l'étoile rouge
+            objC2D.save();
+
+            objC2D.translate(centreX + 40, centreY);
+
+            objC2D.fillStyle = "#E70013";
+            objC2D.rotate(Math.PI / 2);
+
+            let arreteTriangle = 50;
+            let demiBase = 15;
+            let anglePourRotation = 2 * Math.PI / 5;
+            for (let i = 0; i < 5; i++) {
+                objC2D.beginPath();
+                objC2D.moveTo(-demiBase, 0);
+                objC2D.lineTo(0, -arreteTriangle);
+                objC2D.lineTo(demiBase, 0);
+                objC2D.closePath();
+                objC2D.fill();
+                objC2D.rotate(anglePourRotation);
+            }
+            objC2D.restore();
+
+            // Encadrer le drapeau d’un contour noir
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, 640, 420);
+    	}
+    </script>
+</head>
+
+<body onload="dessiner()">
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p> 
+            <span class="sTitreApp">
+                Drapeau de l'Algérie<br />
+            </span> par 
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span> 
+       </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">	
+	   <canvas id="monCanvas" width="640" height="420">
+		    Votre navigateur ne supporte pas la balise canvas
+	    </canvas>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+</body>
+</html>

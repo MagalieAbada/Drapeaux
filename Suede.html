@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau du Suède par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />   
+ 
+ 
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        function dessiner() {
+            const objCanvas = document.getElementById('monCanvas');
+            const objC2D = objCanvas.getContext('2d');
+
+            let hauteurCanva = objCanvas.height;
+            let largeurCanva = objCanvas.width;
+            let centreX = largeurCanva  / 2;
+            let centreY = hauteurCanva / 2; 
+
+            // Fond bleu
+            objC2D.fillStyle = "#006AA7";
+            objC2D.fillRect(0, 0, largeurCanva, hauteurCanva);
+
+            // Croix jaune
+            objC2D.strokeStyle = "#FECC00";
+            objC2D.lineWidth = 80;
+
+            objC2D.beginPath();
+            objC2D.moveTo(centreX - 60, 0);
+            objC2D.lineTo(centreX - 60, hauteurCanva);
+            objC2D.stroke();
+
+            objC2D.beginPath();
+            objC2D.moveTo(0, centreY);
+            objC2D.lineTo(largeurCanva, centreY);
+            objC2D.stroke();
+
+            // Encadrer le drapeau d’un contour noir
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, largeurCanva, hauteurCanva);
+        }
+
+    </script>
+</head>
+
+<body onload="dessiner()">
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p> 
+            <span class="sTitreApp">
+                Drapeau du Suède<br />
+            </span> par 
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span> 
+       </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">	
+	   <canvas id="monCanvas" width="640" height="420">
+		    Votre navigateur ne supporte pas la balise canvas
+	    </canvas>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+</body>
+</html>

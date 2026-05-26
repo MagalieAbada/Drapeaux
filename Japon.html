@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drapeau du Japon par Magalie Abada</title>
+    <link rel="stylesheet" type="text/css" href="Style.css" />   
+ 
+ 
+    <!-- Code JavaScript local -->
+    <script type="text/javascript">
+        let objCanvas = null;
+        let objC2D = null;
+        let objCycleAnimation = null;
+
+        let hauteurCanva = null;
+        let largeurCanva = null;
+
+        let rayon = 60;
+        let augmentation = true;
+
+        function demarrer() {
+            objCanvas = document.getElementById("monCanvas");
+            objC2D = objCanvas.getContext('2d');
+
+            hauteurCanva = objCanvas.height;
+            largeurCanva = objCanvas.width;
+
+            dessiner();
+
+            animer();
+        }
+
+        function animer() {
+        	// Requête pour le prochain cycle
+        	objCycleAnimation = requestAnimationFrame(animer);
+
+        	// Le cycle d'animation
+        	effacerDessin();
+        	mettreAJourAnimation();
+        }
+
+        function effacerDessin() {
+        	objC2D.clearRect(0, 0, objCanvas.width, objCanvas.height);
+        }
+
+        function mettreAJourAnimation() {
+            if (augmentation) {
+                rayon += 0.5;
+                if (rayon >= hauteurCanva * 0.45 || rayon >= largeurCanva * 0.45) {
+                    rayon = Math.min(hauteurCanva * 0.45, largeurCanva * 0.45);
+                    augmentation = false;
+                }
+            } else if (!augmentation) {
+                rayon -= 0.5;
+                if (rayon <= 15) {
+                    rayon = 15;
+                    augmentation = true;
+                }
+            }
+
+            dessiner();
+        }
+
+        function dessiner() {
+            let centreX = largeurCanva  / 2;
+            let centreY = hauteurCanva / 2; 
+
+            // Fond blanc
+            objC2D.fillStyle = "#FFFFFF";
+            objC2D.fillRect(0, 0, largeurCanva, hauteurCanva);
+
+            // Le cercle rouge
+            objC2D.fillStyle = "#FF0000";
+            objC2D.beginPath();
+            objC2D.arc(centreX, centreY, rayon, 0, Math.PI * 2);
+            objC2D.fill();
+
+            // Encadrer le drapeau d’un contour noir
+            objC2D.strokeStyle = "#000000";
+            objC2D.lineWidth = 3;
+            objC2D.strokeRect(0, 0, largeurCanva, hauteurCanva);
+        }
+
+
+    </script>
+</head>
+
+<body onload="demarrer()">
+    <header class="sTexteCentre sLargeurDiv sEntete">
+        <p> 
+            <span class="sTitreApp">
+                Drapeau du Japon<br />
+            </span> par 
+            <span class="sAuteurApp">
+                Magalie Abada
+            </span> 
+       </p>
+    </header>
+
+    <main class="sLargeurDiv sCorps">	
+	   <canvas id="monCanvas" width="640" height="420">
+		    Votre navigateur ne supporte pas la balise canvas
+	    </canvas>
+    </main>
+
+    <footer class="sLargeurDiv sPiedDePage">
+        <p>
+            <a>
+                Magalie Abada
+            </a>
+            <br />
+            &copy; 2026
+        </p>
+    </footer>
+</body>
+</html>
