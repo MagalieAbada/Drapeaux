@@ -1,52 +1,55 @@
-﻿BODY {
-    font-family: arial;
-    font-size: 10pt;
-    color: black;
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
+    margin: 0;
+    padding: 20px;
 }
 
-.sTexteCentre {
-    text-align: center;
-}
-
+/* Structure principale */
 .sLargeurDiv {
     width: 640px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin: auto;
 }
 
+/* Header */
 .sEntete {
-    margin-bottom: 5px;
-    border-bottom-width: 2px;
-    border-bottom-style: solid;
-}
-
-.sCorps {}
-
-.sPiedDePage {
-    margin-top: 5px;
-    border-top-width: 2px;
-    border-top-style: solid;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .sTitreApp {
-    font-size: 150%;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-.sAuteurApp {
-    font-variant: small-caps;
-    font-style: italic;
+    font-size: 2rem;
     font-weight: bold;
 }
 
-A:link IMG,
-A:visited IMG {
-    border: none;
+/* Canvas */
+canvas {
+    display: block;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-A:hover IMG {
-    border-style: double;
-    border-width: 2px;
-    border-color: Green;
+/* Footer */
+.sPiedDePage {
+    margin-top: 15px;
+    padding: 12px;
+
+    text-align: center;
+
+    background: linear-gradient(to right, #1e1e1e, #333);
+    color: white;
+
+    border-radius: 8px;
+
+    font-size: 0.9rem;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.sPiedDePage a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
 }
